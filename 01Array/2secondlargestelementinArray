@@ -1,0 +1,24 @@
+int main() {
+       vector<int> nums = {1, 3, 2, 4};
+
+    int largest = 0;
+    int secondLargest = 0;
+
+    for(int i = 0; i < nums.size(); i++)
+    {
+        if(nums[i] > largest)
+        {
+            secondLargest = largest;
+            largest = nums[i];
+        }
+        else if(nums[i] > secondLargest && nums[i] != largest) // check the two condition
+        {
+            secondLargest = nums[i];
+        }
+    }
+
+    cout << "Second Largest: " << secondLargest;
+
+    return 0;
+      
+    }
