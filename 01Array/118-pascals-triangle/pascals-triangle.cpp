@@ -1,24 +1,23 @@
 class Solution {
 public:
     vector<vector<int>> generate(int numRows) {
-        vector<vector<int>> pascal;
-
-    for(int i=0; i<numRows;i++)
-    { 
-        vector<int> row(i+1);
-        for(int j=0; j<=i;j++)
+        vector<vector<int>> result;
+        for(int i=0; i<numRows; i++)
         {
-            if(j==0)
+            vector<int> rowP;
+            for(int j=0;j<=i; j++)
             {
-                row[j] =1;
+          if(j==0 || j==i)
+          {
+            rowP.push_back(1);
+          }
+          else{
+            int sum = result[i-1][j-1] + result[i-1][j];
+            rowP.push_back(sum);
+          }
             }
-            else{
-            row[j] = (row[j-1]*(i-j+1))/j;
-            }
+            result.push_back(rowP);
         }
-       // pascal[i] = row;  and pascal(5);
-        pascal.push_back(row);
-    }
-    return pascal;
+        return result;
     }
 };
