@@ -14,12 +14,12 @@ public:
         if(count<=0 &&(nums[i]!=cand2))
         {
             cand1= nums[i];
-            count=0;
+            //count=0;
         }
         if(count2<=0 &&(nums[i]!=cand1))
         {
             cand2= nums[i];
-            count2=0;
+           // count2=0;
         }
         if(nums[i]==cand1)
         {
