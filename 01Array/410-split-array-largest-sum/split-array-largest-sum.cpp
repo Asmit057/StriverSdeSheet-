@@ -1,5 +1,15 @@
 class Solution {
 public:
+//Binary search relies on this property:
+
+//If mid is feasible, try a smaller mid (move left).
+// if mid is not feasible, try a larger mid (move right).
+//  mid is the maximum allowed sum of any subarray.
+
+// "Can I split the array so that every subarray has sum ≤ mid, using at most k subarrays?"
+
+// If the answer is yes, then mid is feasible.
+
     bool feasible(vector<int>& nums,int mid , int k)
     {
         int sum =0;
