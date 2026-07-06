@@ -1,36 +1,47 @@
 class Solution {
 public:
+   bool feasible(vector<int>& piles , int mid , int h)
+   {
+    long long count =0; 
+    int n = piles.size();
+    for(int i=0 ; i<n; i++)
+    {
+        int x = ceil(piles[i]/double(mid));
+        count +=x;
+    }
+    if(count<= h)
+    {
+        return true;
+    }
+    else{
+        return false;
+    }
+   }
     int minEatingSpeed(vector<int>& piles, int h) {
-       int n = piles.size();
-      int k =1;
-      int kmax = INT_MIN;
-      int result =INT_MAX;
-      for(int i=0; i<n; i++)
-      {
-        kmax = max(kmax,piles[i]);
-      }  
-
-       while(k<=kmax)
-       {
-           int mid = (k+kmax)/2;
-        long long minH=0;
-        for(int i=0; i<n; i++)
+        int n = piles.size();
+        int low =1;
+        int high = INT_MIN;
+        int result =-1;
+        for(int i=0;i<n; i++)
         {
-            if(mid!=0){
-            double x = double(piles[i])/mid;
-        minH += ceil(x);}
-       // cout<<minH<<" ";
+            high = max(high,piles[i]);
         }
-       if(minH<= h)
-       {
-           result =  mid;
-           kmax = mid-1;
-       }    
-       else{
-           k=mid+1;
-       }
+        while(low<=high)
+        {
+            // here mid denotes the speed range from 1 to max(arr)
+            int mid = (low+high)/2;
+            // now check that if at this speed it is feasible to eat all banans
+            // in given time
+             bool x = feasible(piles, mid ,h);
+             if(x)
+             {
+                result = mid;
+                high = mid-1;
+             }
+             else{
+                low = mid+1;
+             }
+        }
+        return result;
     }
-    return result;
-    }
-    // let k tells the speed 
 };
