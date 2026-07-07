@@ -1,46 +1,53 @@
 class Solution {
 public:
+   bool feasible(vector<int>& bloomDay, int m, int k, int mid)
+   {
+    int n = bloomDay.size();
+    int count =0;
+    int countfl =0;
+    for(int i=0 ; i<n; i++)
+    {
+        if(bloomDay[i]<=mid)
+        {
+            countfl++;
+        }
+        else{
+            count += countfl/k;
+            countfl =0;
+        }
+       // cout<<"count is "<<count<<endl;
+    }
+    count += countfl/k;
+    if(count>=m)
+    {
+        return true;
+    }
+    else{
+        return false;
+    }
+   }
     int minDays(vector<int>& bloomDay, int m, int k) {
-        int n  = bloomDay.size();
-        long long x = 1LL*m*k;
-         if(x>n)
-         {
-             return -1;
-         }
-        int day1 = INT_MAX;
-        int lstDay = INT_MIN;
-        int result =INT_MAX;
+        int n =  bloomDay.size();
+        int low =0;
+        int result = -1;
+        int high = INT_MIN;
         for(int i=0; i<n; i++)
         {
-            day1 = min(bloomDay[i],day1);
-            lstDay = max(bloomDay[i],lstDay);
+            high = max(high, bloomDay[i]);
         }
-        while(day1<=lstDay)
+        while(low<=high) // as days are sorted and flower count will always increase
         {
-            int mid = (day1+lstDay)/2;
-            int count=0;
-            int nobqts=0;
-            for(int i=0; i<n; i++)
+            int mid = (low+high)/2;
+            bool x = feasible(bloomDay, m,k,mid);
+           // cout<<"x ia "<<x<<endl;
+            if(x)
             {
-                if(bloomDay[i]<=mid)
-                {
-                    count++;
-                }
-                else{
-                   int y = (count/k);
-                    nobqts += y;
-                    count=0;;
-                }
+                result = mid;
+                high = mid-1;
             }
-            nobqts += count / k;
-
-            if(nobqts>=m)
+            else
             {
-                 result = min(mid,result);
-                lstDay = mid -1;
-            }
-            else{
-               day1 = mid+1;
+                low = mid+1;
             }
         }
         return result;
