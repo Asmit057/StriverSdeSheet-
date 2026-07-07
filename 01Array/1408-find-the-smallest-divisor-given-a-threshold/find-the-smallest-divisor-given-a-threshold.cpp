@@ -1,31 +1,43 @@
 class Solution {
 public:
-    int smallestDivisor(vector<int>& nums, int threshold) {
-        int low=1;
-        int high = INT_MIN;
+    bool feasible(vector<int>& nums, int threshold , int mid)
+    {
+        int count =0;
         int n = nums.size();
         for(int i=0; i<n; i++)
         {
-            high = max(high,nums[i]);
+            count += ceil(nums[i]/double(mid));
         }
-        int result =INT_MIN;
+        cout<<"count is "<<count<<endl;
+        if(count<=threshold)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    int smallestDivisor(vector<int>& nums, int threshold) {
+        int low = 1;
+        int high = INT_MIN;
+        int n = nums.size();
+        int result = -1;
+        for(int i =0; i<n; i++)
+        {
+            high = max(high, nums[i]);
+        }
         while(low<=high)
         {
-            int count=0;
             int mid = (low+high)/2;
-            for(int i=0; i<n; i++)
+            bool x = feasible(nums, threshold , mid);
+            cout<<"x is "<<x<<" mid is "<<mid<<endl;
+            if(x)
             {
-                count += (nums[i]+mid-1)/mid;
-               
-            }
-            cout<<endl;
-            if(count>threshold)
-            {
-                low = mid+1;
+                result = mid;
+                high  = mid-1;
             }
             else{
-                result = mid;
-                high = mid-1;
+                low = mid+1;
             }
         }
         return result;
