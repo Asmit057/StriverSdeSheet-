@@ -1,5 +1,14 @@
 class Solution {
 public:
+ // sort() expects a normal function The declaration of sort is essentially:
+ // where comparator must be a function of type
+ // It cannot accept a member function that needs a this pointer.
+ // Notice the hidden this parameter. sort() doesn't know what object to pass as this, so you get the error:
+ // bool cmp(Solution* this, pair<char,int> a, pair<char,int> b);
+ // Why static works
+// A static member function does not have a this pointer.
+
+
     static bool cmp(pair<char,int> a, pair<char,int> b)
     {
         return a.second>b.second;
