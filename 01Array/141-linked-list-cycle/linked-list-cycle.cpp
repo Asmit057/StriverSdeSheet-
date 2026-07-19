@@ -15,7 +15,9 @@ public:
         }
         ListNode* slow = head;
         ListNode * fast  = head->next;
-        while(fast!=NULL && slow!=NULL && slow->next!=NULL && fast->next!=NULL )
+        //So fast always reaches the end before or at the same time as slow. //slow can never become NULL while fast is still valid.
+     //   while(fast!=NULL && slow!=NULL && slow->next!=NULL && ////  fast->next!=NULL )
+     while(fast!=NULL && fast->next!=NULL)
         {
  
         if(slow==fast)
