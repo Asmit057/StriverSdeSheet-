@@ -18,6 +18,8 @@ public:
         ListNode *odd = head;
         ListNode *even = head->next;
         ListNode * evenHead = even;
+        // just check for even bcz even come after odd so 
+        // if even not null then odd also
         while(even!=NULL && even->next!=NULL)
         {
             odd->next = even->next;
