@@ -1,40 +1,48 @@
 class Solution {
 public:
-    vector<vector<int>> result;
-    void generate(vector<int>& candidates, int target,int n, int sum, vector<int> v )
-    {
-       if (sum > target)
-        return;
+   vector<vector<int>> result;
 
-    if (n == 0)
+    void generate(vector<int>& candidates,
+                  int target,
+                  int start,
+                  vector<int>& v)
     {
-        if (sum == target)
+        // Target achieved
+        if (target == 0)
+        {
             result.push_back(v);
-        return;
-    }
+            return;
+        }
 
-    // Include current element
-    v.push_back(candidates[n - 1]);
+        // Try every possible choice
+        for (int i = start; i < candidates.size(); i++)
+        {
+            // Skip duplicate choices at the SAME level
+            if (i > start && candidates[i] == candidates[i - 1])
+                continue;
 
-    generate(candidates, target, n - 1,
-             sum + candidates[n - 1], v);
+            // Since array is sorted
+            if (candidates[i] > target)
+                break;
 
-    v.pop_back();
+            // TAKE
+            v.push_back(candidates[i]);
 
-    // Exclude current element
-    // If next element is same, skip all duplicates
-    int i = n - 1;
+            // Move to i + 1 because each element
+            // can be used only once
+            generate(candidates, target - candidates[i], i + 1, v);
 
-    while (i > 0 && candidates[i] == candidates[i - 1])
-        i--;
-
-    generate(candidates, target, i, sum, v);
+            // BACKTRACK
+            v.pop_back();
+        }
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        int n = candidates.size();
+        sort(candidates.begin(), candidates.end());
+
         vector<int> v;
-       sort(candidates.begin(),candidates.end());
-        generate(candidates,target,n,0,v);
-       return result;
+
+        generate(candidates, target, 0, v);
+
+        return result;
     }
 };
